@@ -1,0 +1,52 @@
+<!doctype html>
+<html class="no-js" lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>Scheduler</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="stylesheet.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+<form id="mainForm" name="mainForm">
+  <div id="btn">
+    <select id="dow">
+      <option value="mon">月曜日</option>
+      <option value="tue">火曜日</option>
+      <option value="wed">水曜日</option>
+      <option value="thu">木曜日</option>
+      <option value="fri">金曜日</option>
+      <option value="sat">土曜日</option>
+      <option value="sun">日曜日</option>
+    </select>
+    <input type="text" id="startTime" autocomplete="off">
+    <input type="text" id="endTime" autocomplete="off">
+    <input type="text" id="planName" autocomplete="off">
+    <input type="submit" id="saveBtn" value="決定">
+  </div>
+</form>
+<table id ="mainTable" border="1">
+  <tr>
+    <th>　</th>
+    <th id="monday">月</th>
+    <th id="tuesday">火</th>
+    <th id="wednesday">水</th>
+    <th id="thursday">木</th>
+    <th id="friday">金</th>
+    <th id="saturday">土</th>
+    <th id="sunday">日</th>
+  </tr>
+</table>
+
+<script src = "index.html"></script>
+<script src = "main.js"></script>
+
+
+</body>
+
+</html>
