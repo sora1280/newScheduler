@@ -1,0 +1,3 @@
+#mainTable tr:nth-child(even) {
+    background-color: #a2a2ad;
+}
