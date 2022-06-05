@@ -1,3 +1,47 @@
+/*偶数行に色付け*/
 #mainTable tr:nth-child(even) {
     background-color: #a2a2ad;
 }
+
+/*00分の時だけ大文字*/
+#mainTable tr:nth-child(4n-2) {
+    font-size: x-large;
+}
+
+/*列幅指定*/
+#mainTable tr td:nth-child(1) {
+    width: 9%;
+    text-align: center;
+}
+
+
+#mainTable tr td:nth-child(2){
+    width: 13%;
+    text-align: center;
+}
+
+#mainTable tr td:nth-child(3){
+    width: 13%;
+    text-align: center;
+}
+
+#mainTable tr td:nth-child(4){
+    width: 13%;
+    text-align: center;
+}
+
+#mainTable tr td:nth-child(5){
+    width: 13%;
+    text-align: center;
+}
+
+#mainTable tr td:nth-child(6){
+    width: 13%;
+    text-align: center;
+}
+
+#mainTable tr td:nth-child(7){
+    width: 13%;
+    text-align: center;
+}
+

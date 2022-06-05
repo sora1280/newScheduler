@@ -19,7 +19,6 @@ let allData = {
 
 // 時間軸の生成
 function timeBar() {
-    console.log(data);
     let time = [];
     for(let i = 5; i < 24; i++) {
         for(let j = 0; j <= 45; j = j + 15) {
@@ -76,15 +75,13 @@ function timeBar() {
         writePlan(allData);
     }
 
-    table.rows[2].cells[6].innerHTML = "わーい";
+    // table.rows[2].cells[6].innerHTML = "わーい";
 
 
 }
 
 // 列の取得
 function getDow(dow) {
-    console.log('getDOW');
-    console.log(dow);
     if(dow === "mon") {
         return 1;
     } else if(dow === "tue") {
@@ -125,16 +122,13 @@ async function readDBWriteSchedule() {
     //     plan: 'sample'
     // });
     const scheduleData = await db.schedule.toArray();
-    console.log(scheduleData);
     for (let i = 0; i < scheduleData.length; i++) {
-        console.log(scheduleData[i]);
         writePlan(scheduleData[i]);
     }
 }
 
 //予定の生成
 function writePlan(allData) {
-    console.log('writePlan')
     const start = allData.start;
     const splitStart = String(start).split(":");
     const startHour = splitStart[0];
@@ -145,7 +139,6 @@ function writePlan(allData) {
     const endMinutes = splitEnd[1];
 
     let dowNum = getDow(allData.dow);
-    console.log('dowNum:' + dowNum);
 
     let startHour2 = correspondenceHour(startHour);
     let startMinutes2 = correspondenceMinutes(startMinutes);
@@ -155,8 +148,6 @@ function writePlan(allData) {
 
     let planNum = startHour2 * 4 + startMinutes2 + 1;
     let endNum = endHour2 * 4 + endMinutes2 + 1;
-    console.log('planNum:' + planNum);
-    console.log('dowNum:' + dowNum);
 
     const newText = document.createTextNode(allData.plan);
     table.rows[planNum].cells[dowNum].appendChild(newText);
@@ -165,15 +156,12 @@ function writePlan(allData) {
     table.rows[planNum].cells[dowNum].rowSpan = endNum - planNum + 1;
     //右列の削除
     for(let i = planNum; i < endNum; i++) {
-        console.log("rows:"+i+1);
-        console.log("cells:"+ dowNum+1);
          table.rows[i+1].deleteCell(dowNum+1);
     }
 }
 
 //時、分のセル位置に対応させるための変更
 function correspondenceHour(hour) {
-    console.log('cHour')
     // switch(hour) {
     //     case "00":
     //         return hour = 0;
@@ -209,7 +197,6 @@ function correspondenceHour(hour) {
 }
 
 function correspondenceMinutes(minutes) {
-    console.log('cMinutes');
     switch(minutes) {
         case "00":
             minutes = 0;
@@ -229,7 +216,6 @@ function correspondenceMinutes(minutes) {
 
 // 決定ボタンを押したときの動作
 function save() {
-    console.log('save');
     // 要素の取得
     const startTime = document.getElementById("startTime").value;
     const endTime = document.getElementById("endTime").value;
@@ -237,8 +223,6 @@ function save() {
     const dow1 = document.getElementById("dow");
     const dow2 = dow1.selectedIndex;
     const dow = dow1.options[dow2].value;
-
-    console.log(dow, startTime, endTime,planName);
 
     // DB追加
     putData({
@@ -252,8 +236,6 @@ function save() {
     allData.start = startTime;
     allData.end = endTime;
     allData.plan = planName;
-
-    console.log(allData);
 
     // saveData(allData);
 
