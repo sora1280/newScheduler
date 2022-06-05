@@ -104,6 +104,34 @@ function getDow(dow) {
     }
 }
 
+// DBからすべてのスケジュールを読み込み、書き込む
+async function readDBWriteSchedule() {
+    // putData({
+    //     dow: 'mon',
+    //     start: '9:00',
+    //     end: '10:00',
+    //     plan: 'sample'
+    // });
+    // putData({
+    //     dow: 'mon',
+    //     start: '11:00',
+    //     end: '12:00',
+    //     plan: 'sample'
+    // });
+    // putData({
+    //     dow: 'tue',
+    //     start: '9:00',
+    //     end: '10:00',
+    //     plan: 'sample'
+    // });
+    const scheduleData = await db.schedule.toArray();
+    console.log(scheduleData);
+    for (let i = 0; i < scheduleData.length; i++) {
+        console.log(scheduleData[i]);
+        writePlan(scheduleData[i]);
+    }
+}
+
 //予定の生成
 function writePlan(allData) {
     console.log('writePlan')
@@ -128,13 +156,19 @@ function writePlan(allData) {
     let planNum = startHour2 * 4 + startMinutes2 + 1;
     let endNum = endHour2 * 4 + endMinutes2 + 1;
     console.log('planNum:' + planNum);
+    console.log('dowNum:' + dowNum);
 
     const newText = document.createTextNode(allData.plan);
     table.rows[planNum].cells[dowNum].appendChild(newText);
-    table.rows[endNum].cells[dowNum].innerHTML = "終了";
-
+    
+    //列の結合
     table.rows[planNum].cells[dowNum].rowSpan = endNum - planNum + 1;
-
+    //右列の削除
+    for(let i = planNum; i < endNum; i++) {
+        console.log("rows:"+i+1);
+        console.log("cells:"+ dowNum+1);
+         table.rows[i+1].deleteCell(dowNum+1);
+    }
 }
 
 //時、分のセル位置に対応させるための変更
@@ -221,7 +255,7 @@ function save() {
 
     console.log(allData);
 
-    saveData(allData);
+    // saveData(allData);
 
     writePlan(allData);
 
@@ -229,20 +263,27 @@ function save() {
 }
 
 //取得したデータの保存
-function saveData(allData) {
-    data.dow.push(allData.dow);
-    data.start.push(allData.start);
-    data.end.push(allData.end);
-    data.plan.push(allData.plan);
+// function saveData(allData) {
+//     data.dow.push(allData.dow);
+//     data.start.push(allData.start);
+//     data.end.push(allData.end);
+//     data.plan.push(allData.plan);
 
-    //データベースへの書き込み
+//     //データベースへの書き込み
 
+// }
+
+//tableの全削除
+function deleteAll() {
+    for(let i = 0; i < 96; i++) {
+        table.deleteRow(-1);
+    }
 }
 
 // リロードした時の読み込みなおし
 window.onload = function () {
+    deleteAll();
     timeBar();
-    writePlan(data);
     return false;
 }
 
@@ -253,3 +294,5 @@ const main = () => {
 }
 
 main();
+
+readDBWriteSchedule();
