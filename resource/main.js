@@ -76,7 +76,7 @@ function timeBar() {
         writePlan(allData);
     }
 
-    table.rows[1].cells[6].innerHTML = "わーい";
+    table.rows[2].cells[6].innerHTML = "わーい";
 
 
 }
@@ -85,20 +85,22 @@ function timeBar() {
 function getDow(dow) {
     console.log('getDOW');
     console.log(dow);
-    if(dow === "月曜日") {
+    if(dow === "mon") {
         return 1;
-    } else if(dow === "火曜日") {
+    } else if(dow === "tue") {
         return 2;
-    } else if(dow === "水曜日") {
+    } else if(dow === "wed") {
         return 3;
-    } else if(dow === "木曜日") {
+    } else if(dow === "thu") {
         return 4;
-    } else if(dow === "金曜日") {
+    } else if(dow === "fri") {
         return 5;
-    } else if(dow === "土曜日") {
+    } else if(dow === "sat") {
         return 6;
-    } else {
+    } else if(dow === "sun") {
         return 7;
+    } else {
+
     }
 }
 
@@ -120,11 +122,19 @@ function writePlan(allData) {
     let startHour2 = correspondenceHour(startHour);
     let startMinutes2 = correspondenceMinutes(startMinutes);
 
-    let planNum = startHour2 * 4 + startMinutes2;
+    let endHour2 = correspondenceHour(endHour);
+    let endMinutes2 = correspondenceMinutes(endMinutes);
+
+    let planNum = startHour2 * 4 + startMinutes2 + 1;
+    let endNum = endHour2 * 4 + endMinutes2 + 1;
     console.log('planNum:' + planNum);
 
-    //table.rows[planNum].cells[dowNum].innerText = allData.plan;
-    //table.rows[planNum].cells[1].innerHTML = "わーい";
+    const newText = document.createTextNode(allData.plan);
+    table.rows[planNum].cells[dowNum].appendChild(newText);
+    table.rows[endNum].cells[dowNum].innerHTML = "終了";
+
+    table.rows[planNum].cells[dowNum].rowSpan = endNum - planNum + 1;
+
 }
 
 //時、分のセル位置に対応させるための変更
@@ -211,7 +221,6 @@ function save() {
 
     console.log(allData);
 
-    //ここでデータベースに追加
     saveData(allData);
 
     writePlan(allData);
@@ -233,7 +242,7 @@ function saveData(allData) {
 // リロードした時の読み込みなおし
 window.onload = function () {
     timeBar();
-    // writePlan(allData);
+    writePlan(data);
     return false;
 }
 
